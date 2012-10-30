@@ -7,10 +7,7 @@ rails new app_name --skip-test-unit
 bundle --without production
 ```
 
-* Use Gemfile from
-```
-bit.ly/rails_tutorial_gemfile
-```
+* Use Gemfile from http://bit.ly/rails_tutorial_gemfile
 
 * Configure rspec
 ```
