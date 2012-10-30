@@ -26,14 +26,17 @@ git push heroku
 heroku open
 ```
 
-* Generate controllers WITHOUT test files and tests with rspec
+* Generate controllers WITHOUT test files
 ```
 rails g controller myCont --no-test-framework
-rails g integration_test myCont
 ```
 
 Using TDD with rspec and spork
 ==============================
+* Generate tests with rspec for a controller
+```
+rails g integration_test myCont
+```
 
 * Edit .rspec to use spork (configure it previously as said in http://youtu.be/FZ-b9oZpCZY)
 ```
@@ -44,5 +47,6 @@ Using TDD with rspec and spork
 
 * Launch it
 ```
+spork --bootstrap
 spork
 ```
