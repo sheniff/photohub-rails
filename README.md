@@ -25,6 +25,7 @@ git init
 * deploy on heroku and open our project with them
 ```
 heroku create --stack cedar
+git push heroku
 heroku open
 ```
 
@@ -42,7 +43,7 @@ Using TDD with rspec and spork
 --drb
 ```
 
-* Move generated code in spec_helper.rb INTO Spork.prefork 
+* Move generated code in **spec_helper.rb** INTO **Spork.prefork**
 
 * Launch it
 ```
