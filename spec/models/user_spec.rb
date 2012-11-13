@@ -33,6 +33,8 @@ describe User do
   it { should respond_to (:remember_token) }
   it { should respond_to (:admin) }
   it { should respond_to (:authenticate) }
+  # relations
+  it { should respond_to (:albums) }
 
   it { should be_valid }
   it { should_not be_admin }
@@ -145,5 +147,28 @@ describe User do
     end
 
     it { should be_admin }
+  end
+
+  describe "album associations" do
+
+    before { @user.save }
+    let!(:older_album) do
+      FactoryGirl.create(:album, user: @user, created_at: 1.day.ago)
+    end
+    let!(:newer_album) do
+      FactoryGirl.create(:album, user: @user, created_at: 1.hour.ago)
+    end
+
+    it "should have the right album in the right order" do
+      @user.albums.should == [newer_album, older_album]
+    end
+
+    it "should destroy associated albums" do
+      albums = @user.albums
+      @user.destroy
+      albums.each do |album|
+        Album.find_by_id(album.id).should be_nil
+      end
+    end
   end
 end

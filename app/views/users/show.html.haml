@@ -5,3 +5,9 @@
       %h1
         = gravatar_for @user
         = @user.name
+  .span8
+    - if @user.albums.any?
+      %h3= "Albums (#{@user.albums.count})"
+      %ol.albums
+        = render @albums
+      = will_paginate @albums

@@ -57,10 +57,19 @@ describe "UserPages" do
 
   describe "profile page" do
     let(:user) { FactoryGirl.create(:user) }
+    let!(:a1) { FactoryGirl.create(:album, user: user, title: "foo", description: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit.") }
+    let!(:a2) { FactoryGirl.create(:album, user: user, title: "bar", description: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit.") }
+
     before { visit user_path(user) }
 
     it { should have_selector('h1',     text: user.name ) }
     it { should have_selector('title',  text: user.name ) }
+
+    describe "albums" do
+      it { should have_content(a1.title) }
+      it { should have_content(a2.title) }
+      it { should have_content(user.albums.count) }
+    end
   end
 
   describe "signup" do
