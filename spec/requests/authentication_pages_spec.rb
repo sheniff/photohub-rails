@@ -43,6 +43,10 @@ describe "Authentication" do
   describe "authorization" do
 
     describe "for non-signed-in users" do
+
+      it { should_not have_link('Profile',      href: user_path(user)) }
+      it { should_not have_link('Settings',     href: edit_user_path(user)) }
+
       let(:user) { FactoryGirl.create(:user) }
 
       describe "when atempting to visit a protected page" do
@@ -57,10 +61,23 @@ describe "Authentication" do
           it "should render the desired protected page" do
             page.should have_selector('title', text: 'Edit user')
           end
+
+          describe "when signing in again" do
+            before do
+              visit signin_path
+              fill_in "Email",    with: user.email
+              fill_in "Password", with: user.password
+              click_button "Sign in"
+            end
+
+            it "should render the default (profile) page" do
+              page.should have_selector('title', text: user.name)
+            end
+          end
         end
       end
 
-      describe "In the Users controller" do
+      describe "in the Users controller" do
         describe "visiting the edit page" do
           before { visit edit_user_path(user) }
           it { should have_selector('title', text: 'Sign in') }
@@ -78,6 +95,21 @@ describe "Authentication" do
       end
     end
 
+    describe "as a signed-in user" do
+      let(:user) { FactoryGirl.create(:user) }
+      before { sign_in user }
+
+      describe "visiting new user page" do
+        before { visit signup_path }
+        it { should_not have_selector('title', text: full_title('Sign Up')) }
+      end
+
+      describe "submitting a POST request to the Users#create action" do
+        before { post users_path }
+        specify { response.should redirect_to(root_path) }
+      end
+    end
+
     describe "as wrong user" do
       let(:user) { FactoryGirl.create(:user) }
       let(:wrong_user) { FactoryGirl.create(:user, email: "wrong@example.com") }
@@ -91,6 +123,16 @@ describe "Authentication" do
       describe "submitting a PUT request to the Users#update action" do
         before { put user_path(wrong_user) }
         specify { response.should redirect_to(root_path) }
+      end
+    end
+
+    describe "as admin user" do
+      let(:admin) { FactoryGirl.create(:admin) }
+      before { sign_in admin }
+
+      describe "destroying himself" do
+        before { delete user_path(admin) }
+        specify { response.should redirect_to(users_path) }
       end
     end
 
