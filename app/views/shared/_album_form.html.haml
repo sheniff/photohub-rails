@@ -1,0 +1,7 @@
+= form_for(@album) do |f|
+  = render 'shared/error_messages', object: f.object
+  .field
+    = f.text_field :title, placeholder: "New album title..."
+  .field
+    = f.text_area :description, placeholder: "Something to say?"
+  = f.submit "New Album", class: "btn btn-large btn-primary"

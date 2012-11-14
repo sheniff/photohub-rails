@@ -93,6 +93,19 @@ describe "Authentication" do
           it { should have_selector('title', text: 'Sign in') }
         end
       end
+
+      describe "in the Albums controller" do
+
+        describe "submitting to the create action" do
+          before { post albums_path }
+          specify { response.should redirect_to(signin_path) }
+        end
+
+        describe "submitting to the destroy action" do
+          before { delete album_path(FactoryGirl.create(:album)) }
+          specify { response.should redirect_to(signin_path) }
+        end
+      end
     end
 
     describe "as a signed-in user" do
