@@ -1,6 +1,9 @@
 class StaticPagesController < ApplicationController
   def home
-    @album = current_user.albums.build if signed_in?
+    if signed_in?
+      @album = current_user.albums.build
+      @feed_items = current_user.feed.paginate(page: params[:page])
+    end
   end
 
   def help

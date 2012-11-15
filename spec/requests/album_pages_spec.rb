@@ -32,4 +32,14 @@ describe "AlbumPages" do
     end
   end
 
+  describe "album destruction" do
+    before { FactoryGirl.create(:album, user: user) }
+
+    describe "as correct user" do
+      before { visit root_path }
+      it "should delete an album" do
+        expect { click_link "delete" }.to change(Album, :count).by(-1)
+      end
+    end
+  end
 end

@@ -2,3 +2,5 @@
   %span.content= album.title
   %span.timestamp
     Created #{ time_ago_in_words(album.created_at) } ago.
+  - if current_user?(album.user)
+    = link_to "delete", album, method: :delete, data: { confirm: "You sure?" }, title: album.title

@@ -170,15 +170,15 @@ describe User do
         Album.find_by_id(album.id).should be_nil
       end
     end
-  end
 
-  describe "status" do
-    let(:unfollowed_album) do
-      FactoryGirl.create(:album, user: FactoryGirl.create(:user))
+    describe "status" do
+      let(:unfollowed_album) do
+        FactoryGirl.create(:album, user: FactoryGirl.create(:user))
+      end
+
+      its(:feed) { should include(newer_album) }
+      its(:feed) { should include(older_album) }
+      its(:feed) { should_not include(unfollowed_album) }
     end
-
-    its(:feed) { should include(newer_album) }
-    its(:feed) { should include(older_album) }
-    its(:feed) { should_not include(unfollowed_album) }
   end
 end
