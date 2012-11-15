@@ -41,5 +41,11 @@ describe "AlbumPages" do
         expect { click_link "delete" }.to change(Album, :count).by(-1)
       end
     end
+
+    describe "as an incorrect user" do
+      let(:incorrect_user) { FactoryGirl.create(:user, email: "incorrect@example.org") }
+      before { visit user_path(incorrect_user) }
+      it { should_not have_selector('a', text: 'delete') }
+    end
   end
 end

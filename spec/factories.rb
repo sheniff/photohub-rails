@@ -11,8 +11,8 @@ FactoryGirl.define do
   end
 
   factory :album do
-    title         "Example Album"
-    description   "Lorem ipsum dolor sit amet"
+    sequence(:title)         { |n| "Example Album"}
+    sequence(:description)   { |n| "Lorem ipsum dolor sit amet"}
     user
   end
 end

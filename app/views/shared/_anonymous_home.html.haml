@@ -1,0 +1,10 @@
+.hero-unit.center
+  %h1= "Welcome to PhotoHub"
+  %h2
+    This is the home page for
+    %a{ :href => '/' }= "PhotoHub"
+    while it's under construction...
+
+  = link_to "Sign up now!", signup_path, class: "btn btn-large btn-primary"
+
+= link_to image_tag("rails.png", alt: "rails"), "http://rubyonrails.org/"

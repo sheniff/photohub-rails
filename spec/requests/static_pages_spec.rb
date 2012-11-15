@@ -30,6 +30,27 @@ describe "StaticPages" do
           page.should have_selector("li##{item.id}", text: item.title)
         end
       end
+
+      it { should have_selector('span.count', text: "#{user.albums.count} albums") }
+
+    end
+
+    describe "pagination" do
+      let(:user) { FactoryGirl.create(:user) }
+      before(:all) do
+        30.times { FactoryGirl.create(:album, user: user) }
+        sign_in user
+        visit root_path
+      end
+      after(:all) { user.delete }
+
+      it { should have_selector('div', class: "pagination") }
+
+      it "should list each album" do
+        Album.paginate(page: 1).each do |album|
+          page.should have_selector('li', text: album.title)
+        end
+      end
     end
   end
 

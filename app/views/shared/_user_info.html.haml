@@ -5,5 +5,5 @@
   = current_user.name
 %span
   = link_to "view my profile", current_user
-%span
+%span.count
   = pluralize(current_user.albums.count, "album")
