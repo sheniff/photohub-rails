@@ -33,12 +33,22 @@ describe "StaticPages" do
 
       it { should have_selector('span.count', text: "#{user.albums.count} albums") }
 
+      describe "follower/following counts" do
+        let(:other_user) { FactoryGirl.create(:user) }
+        before do
+          other_user.follow!(user)
+          visit root_path
+        end
+
+        it { should have_link("0 following", href: following_user_path(user)) }
+        it { should have_link("1 followers", href: followers_user_path(user)) }
+      end
     end
 
     describe "pagination" do
       let(:user) { FactoryGirl.create(:user) }
       before(:all) do
-        30.times { FactoryGirl.create(:album, user: user) }
+        31.times { FactoryGirl.create(:album, user: user) }
         sign_in user
         visit root_path
       end
