@@ -1,9 +1,10 @@
 class AlbumsController < ApplicationController
   before_filter :signed_in_user,  only: [:create, :destroy]
-  before_filter :correct_user,    only: [:show, :destroy]
+  before_filter :correct_user,    only: [:destroy]
 
   def show
     @user = current_user
+    @album = Album.find_by_id(params[:id])
   end
 
   def create
