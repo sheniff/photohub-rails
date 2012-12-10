@@ -3,9 +3,8 @@ namespace :db do
   task populate: :environment do
     make_users
     make_albums
+    make_pictures
     make_relationships
-
-
   end
 end
 
@@ -29,13 +28,27 @@ end
 
 def make_albums
   users = User.all(limit: 6)
-  40.times do |n|
+  2.times do |n|
     title = Faker::Lorem.sentence(5)
     description = Faker::Lorem.sentence(15)
     users.each { |user| user.albums.create!(title: title, description: description) }
   end
 end
 
+def make_pictures
+  include ActionDispatch::TestProcess
+  albums = Album.all
+  10.times do |n|
+    name = Faker::Lorem.sentence(5)
+    albums.each do |album|
+      album.pictures.create!(
+        name: name,
+        user_id: album.user.id,
+        image: fixture_file_upload("#{::Rails.root}/spec/fixtures/images/test.jpg", 'image/jpeg')
+      )
+    end
+  end
+end
 
 def make_relationships
   users = User.all

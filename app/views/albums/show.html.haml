@@ -1,0 +1,16 @@
+- provide(:title, @album.title)
+.row
+  %aside.span4
+    %section
+      %h1
+        = gravatar_for @user
+        = @user.name
+    %section
+      = render 'shared/stats'
+  .span8
+    %h2
+      Album: #{@album.title}
+      %small= "#{@album.pictures.count} pictures"
+    = link_to "Add picture", new_album_picture_path(@album), class: "btn btn-large btn-primary"
+    %ul.pictures.thumbnails
+      = render @album.pictures

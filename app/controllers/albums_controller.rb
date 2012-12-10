@@ -1,6 +1,11 @@
 class AlbumsController < ApplicationController
   before_filter :signed_in_user,  only: [:create, :destroy]
-  before_filter :correct_user,    only: :destroy
+  before_filter :correct_user,    only: [:show, :destroy]
+
+  def show
+    @user = current_user
+  end
+
   def create
     @album = current_user.albums.build(params[:album])
     if @album.save

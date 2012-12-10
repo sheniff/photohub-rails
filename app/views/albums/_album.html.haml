@@ -1,5 +1,5 @@
 %li
-  %span.content= wrap(album.title)
+  = link_to wrap(album.title), album_path(album), class: "content"
   %span.timestamp
     Created #{ time_ago_in_words(album.created_at) } ago.
   = render 'shared/delete_album', object: album

@@ -1,0 +1,7 @@
+%li.span2
+  .thumbnail
+    = image_tag picture.image.url(:thumb)
+    %h3= link_to picture.name, picture.image.url, class: "content"
+    %p.timestamp
+      Added #{ time_ago_in_words(picture.created_at) } ago by #{ link_to picture.user.name, user_path(picture.user) }.
+    = render 'shared/actions_picture', object: picture

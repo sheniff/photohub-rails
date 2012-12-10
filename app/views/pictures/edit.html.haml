@@ -1,0 +1,8 @@
+- provide(:title, 'Edit picture')
+%h1= "Editing picture"
+.row
+  .span6.offset3
+    = form_for(@picture) do |f|
+      = f.label :name
+      = f.text_field :name
+      = f.submit "Save", class: "btn btn-large btn-primary"

@@ -1,0 +1,7 @@
+- provide(:title, 'New Picture')
+%h1= "Add a new picture"
+.row
+  .span6.offset3
+    = form_for(@picture, url: album_pictures_path, html: { multipart: true }) do |f|
+      = render 'fields', f: f
+      = f.submit "Save", class: "btn btn-large btn-primary"

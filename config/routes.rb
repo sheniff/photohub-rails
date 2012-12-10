@@ -5,8 +5,12 @@ Photohub::Application.routes.draw do
     end
   end
   resources :sessions,      only: [:new, :create, :destroy]
-  resources :albums,        only: [:create, :destroy]
+  resources :pictures,      only: [:edit, :update, :destroy]
   resources :relationships, only: [:create, :destroy]
+
+  resources :albums,        only: [:show, :create, :destroy] do
+    resources :pictures,      only: [:new, :create]
+  end
 
   root to: "static_pages#home"
 
