@@ -9,8 +9,8 @@ class Collaboration < ActiveRecord::Base
   ALL_ROLES = [COLLABORATOR_ROLE, VIEWER_ROLE]
 
   ACCEPTED_STATUS = 'accepted'
-  PENDANT_STATUS = 'pendant'
-  ALL_STATUSES = [ACCEPTED_STATUS, PENDANT_STATUS]
+  PENDING_STATUS = 'pending'
+  ALL_STATUSES = [ACCEPTED_STATUS, PENDING_STATUS]
 
   validates :album, presence: true
   validates :user, presence: true

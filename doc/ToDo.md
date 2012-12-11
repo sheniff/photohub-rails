@@ -19,7 +19,7 @@ HTML (base)
 * List collaborators
   - Owner can add/remove new collaborators
 * List invitations (collaborators that still didn't accept the invitation)
-* List pendant invitations for every user
+* List pending invitations for every user
   - Let the user to accept/reject it (if they have an invitation, of course)
 * List collaborating albums along with user's own albums
 * Download album
@@ -31,7 +31,7 @@ API
 * Collaborations
   // for signed in users
   - /collaborations             (accepted invitations, current collaborations)
-  - /collaborations/pendant     (still not accepted invitations)
+  - /collaborations/pending     (still not accepted invitations)
   - /collaborations/:id/accept
   - /collaborations/:id/reject  (no matter if the user is still collaborating or not)
 

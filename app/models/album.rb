@@ -28,13 +28,13 @@ class Album < ActiveRecord::Base
   end
 
   def invited?(other_user)
-    Collaboration.find_by_user_id_and_status(other_user.id, Collaboration::PENDANT_STATUS)
+    Collaboration.find_by_user_id_and_status(other_user.id, Collaboration::PENDING_STATUS)
   end
 
   def invite!(other_user)
     collaborations.create!(user_id: other_user.id,
               role: Collaboration::COLLABORATOR_ROLE,
-              status: Collaboration::PENDANT_STATUS) if other_user != user
+              status: Collaboration::PENDING_STATUS) if other_user != user
   end
 
   def revoke!(other_user)

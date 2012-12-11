@@ -4,17 +4,27 @@ Photohub::Application.routes.draw do
       get :following, :followers
     end
   end
-  resources :sessions,      only: [:new, :create, :destroy]
-  resources :pictures,      only: [:edit, :update, :destroy]
-  resources :relationships, only: [:create, :destroy]
+  resources :sessions,        only: [:new, :create, :destroy]
+  resources :pictures,        only: [:edit, :update, :destroy]
+  resources :relationships,   only: [:create, :destroy]
 
-  resources :albums,        only: [:show, :create, :destroy] do
-    resources :pictures,      only: [:new, :create]
+  resources :albums,          only: [:show, :create, :destroy] do
+    resources :pictures,        only: [:new, :create]
     member do
       post 'invite/:user_id', action: 'invite',         as: 'invite_to'
       post 'revoke/:user_id', action: 'revoke',         as: 'revoke_from'
       get  'collaborators',   action: 'collaborators',  as: 'collaborators'
       get  'invitations',     action: 'invitations',    as: 'invitations'
+    end
+  end
+
+  resources :collaborations,  only: [:index] do
+    collection do
+      get   'pending',  action: 'pending',  as: 'pending'
+    end
+    member do
+      post  'accept',   action: 'accept',   as: 'accept'
+      post  'reject',   action: 'reject',   as: 'reject'
     end
   end
 

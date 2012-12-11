@@ -74,7 +74,7 @@ describe "AlbumPages" do
 
     describe "showing user lists" do
       let(:another_user) { FactoryGirl.create(:user) }
-      let(:collaboration) { album.collaborations.build(user_id: another_user.id, role: Collaboration::COLLABORATOR_ROLE, status: Collaboration::PENDANT_STATUS) }
+      let(:collaboration) { album.collaborations.build(user_id: another_user.id, role: Collaboration::COLLABORATOR_ROLE, status: Collaboration::PENDING_STATUS) }
 
       describe "invitations" do
         before { visit invitations_album_path(album) }

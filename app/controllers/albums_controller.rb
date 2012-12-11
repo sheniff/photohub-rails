@@ -42,11 +42,11 @@ class AlbumsController < ApplicationController
   end
 
   def collaborators
-    @collaborators = @album.collaborators.where(collaborations: {status: Collaboration::ACCEPTED_STATUS});
+    @collaborators = @album.collaborators.where(collaborations: {status: Collaboration::ACCEPTED_STATUS})
   end
 
   def invitations
-    @invitations = @album.collaborators.where(collaborations: {status: Collaboration::PENDANT_STATUS});
+    @invitations = @album.collaborators.where(collaborations: {status: Collaboration::PENDING_STATUS})
   end
 
   private

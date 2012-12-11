@@ -4,7 +4,7 @@ describe Collaboration do
 
   let(:album) { FactoryGirl.create(:album) }
   let(:user) { FactoryGirl.create(:user) }
-  let(:collaboration) { album.collaborations.build(user_id: user.id, role: Collaboration::COLLABORATOR_ROLE, status: Collaboration::PENDANT_STATUS) }
+  let(:collaboration) { album.collaborations.build(user_id: user.id, role: Collaboration::COLLABORATOR_ROLE, status: Collaboration::PENDING_STATUS) }
 
   subject { collaboration }
 
