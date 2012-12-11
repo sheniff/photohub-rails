@@ -6,7 +6,7 @@ class CollaborationsController < ApplicationController
     @albums = current_user.collaborating_albums
   end
 
-  def index
+  def pending
     @albums = current_user.collaborating_albums.where(collaborations: {status: Collaboration::PENDING_STATUS})
   end
 
