@@ -12,6 +12,7 @@ HTML (base)
 * Set proper permissions for editing and removing images
 * Download album
 * Set album as public
+* Let people to login with FB, Google, Twitter, or Dropbox
 
 API
 ---
