@@ -10,6 +10,12 @@ Photohub::Application.routes.draw do
 
   resources :albums,        only: [:show, :create, :destroy] do
     resources :pictures,      only: [:new, :create]
+    member do
+      post 'invite/:user_id', action: 'invite',         as: 'invite_to'
+      post 'revoke/:user_id', action: 'revoke',         as: 'revoke_from'
+      get  'collaborators',   action: 'collaborators',  as: 'collaborators'
+      get  'invitations',     action: 'invitations',    as: 'invitations'
+    end
   end
 
   root to: "static_pages#home"

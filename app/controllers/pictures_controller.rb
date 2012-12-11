@@ -38,13 +38,13 @@ class PicturesController < ApplicationController
   private
 
     def correct_user
-      @picture = current_user.pictures.find_by_id(params[:id])
+      @picture = current_user.pictures.find_by_id!(params[:id])
     rescue
       redirect_to root_url
     end
 
     def album_owner
-      @album = current_user.albums.find_by_id(params[:album_id])
+      @album = current_user.albums.find_by_id!(params[:album_id])
     rescue
       redirect_to root_url
     end

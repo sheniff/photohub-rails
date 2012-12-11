@@ -23,7 +23,11 @@ describe Album do
   it { should respond_to(:title) }
   it { should respond_to(:description) }
   it { should respond_to(:user_id) }
+  # relations
   it { should respond_to(:user) }
+  it { should respond_to(:collaborations) }
+  it { should respond_to(:collaborators) }
+
   its(:user) { should == user }
 
   describe "accessible attributes" do

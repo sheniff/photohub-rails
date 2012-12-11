@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121210012235) do
+ActiveRecord::Schema.define(:version => 20121211034502) do
 
   create_table "albums", :force => true do |t|
     t.string   "title"
@@ -20,6 +20,19 @@ ActiveRecord::Schema.define(:version => 20121210012235) do
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
   end
+
+  create_table "collaborations", :force => true do |t|
+    t.integer  "album_id"
+    t.integer  "user_id"
+    t.string   "role"
+    t.string   "status"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "collaborations", ["album_id", "user_id"], :name => "index_collaborations_on_album_id_and_user_id", :unique => true
+  add_index "collaborations", ["album_id"], :name => "index_collaborations_on_album_id"
+  add_index "collaborations", ["user_id"], :name => "index_collaborations_on_user_id"
 
   create_table "pictures", :force => true do |t|
     t.string   "name"

@@ -15,8 +15,29 @@ class Album < ActiveRecord::Base
   belongs_to :user
   has_many :pictures, dependent: :destroy
 
+  has_many :collaborations, dependent: :destroy
+  has_many :collaborators, through: :collaborations, source: :user
+
   validates :title, presence: true, length: { maximum: 200 }
   validates :user_id, presence: true
 
   default_scope order: 'albums.created_at DESC'
+
+  def collaborating?(other_user)
+    Collaboration.find_by_user_id_and_status(other_user.id, Collaboration::ACCEPTED_STATUS)
+  end
+
+  def invited?(other_user)
+    Collaboration.find_by_user_id_and_status(other_user.id, Collaboration::PENDANT_STATUS)
+  end
+
+  def invite!(other_user)
+    collaborations.create!(user_id: other_user.id,
+              role: Collaboration::COLLABORATOR_ROLE,
+              status: Collaboration::PENDANT_STATUS) if other_user != user
+  end
+
+  def revoke!(other_user)
+    collaborations.find_by_user_id(other_user.id).destroy
+  end
 end

@@ -41,11 +41,6 @@ describe Picture do
         Picture.new(album_id: album.id)
       end.to raise_error(ActiveModel::MassAssignmentSecurity::Error)
     end
-    it "should not allow access to user_id" do
-      expect do
-        Picture.new(user_id: user.id)
-      end.to raise_error(ActiveModel::MassAssignmentSecurity::Error)
-    end
   end
 
   describe "when album_id is not present" do
