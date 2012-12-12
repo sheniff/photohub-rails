@@ -1,0 +1,11 @@
+- provide(:title, "Collaborators")
+.row
+  %aside.span4
+  .span8
+    %h2
+      Collaborators for Album: #{@album.title}
+      %small= "#{@collaborators.count} invitations"
+    - if current_user?(@album.user)
+      = link_to "Invite friend", '#', class: "btn btn-large btn-primary"
+    %ul.invitations
+      = render 'users/collaborators', object: @collaborators

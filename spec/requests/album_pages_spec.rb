@@ -74,12 +74,20 @@ describe "AlbumPages" do
 
     describe "showing user lists" do
       let(:another_user) { FactoryGirl.create(:user) }
-      let(:collaboration) { album.collaborations.build(user_id: another_user.id, role: Collaboration::COLLABORATOR_ROLE, status: Collaboration::PENDING_STATUS) }
+      let(:collaboration) { album.collaborations.create(user_id: another_user.id, role: Collaboration::COLLABORATOR_ROLE, status: Collaboration::PENDING_STATUS) }
 
       describe "invitations" do
         before { visit invitations_album_path(album) }
-        it "should show a list of invitations" do
+        it { should have_content(collaboration.album.title) }
+        it { should have_link('Revoke') }
+        it { should have_link('Invite friend') }
 
+        describe "an user different than the onwer" do
+          before do
+            sign_in another_user
+            visit invitations_album_path(album)
+          end
+          it { should_not have_link('Invite friend') }
         end
       end
 
@@ -87,11 +95,59 @@ describe "AlbumPages" do
         before do
           sign_in another_user
           post accept_collaboration_path(collaboration)
+          sign_in user
           visit collaborators_album_path(album)
         end
+        it { should have_content(collaboration.album.title) }
+        it { should have_link('Uninvite') }
+        it { should have_link('Invite friend') }
 
-        it "should show a list of collaborators" do
+        describe "an user different than the onwer" do
+          before do
+            sign_in another_user
+            visit collaborators_album_path(album)
+          end
+          it { should_not have_link('Uninvite') }
+          it { should_not have_link('Invite friend') }
+        end
+      end
+    end
+  end
 
+  describe "collaborating in an album" do
+    include ActionDispatch::TestProcess
+    before { sign_in user }
+    let(:album) { FactoryGirl.create(:album, user: user) }
+    let(:another_user) { FactoryGirl.create(:user) }
+
+    describe "a non-collaborator user" do
+      it "should not be able to add pictures" do
+        expect do
+          album.pictures.create(name: "Test picture",
+                        user_id: another_user.id,
+                        image: fixture_file_upload('/images/test.jpg', 'image/jpeg'))
+        end.not_to change(Picture, :count)
+      end
+    end
+
+    describe "an invited user" do
+      let(:collaboration) { album.collaborations.create(user_id: another_user.id, role: Collaboration::COLLABORATOR_ROLE, status: Collaboration::PENDING_STATUS) }
+      it "should not be able to add picture yet" do
+        expect do
+          album.pictures.create(name: "Test picture",
+                        user_id: another_user.id,
+                        image: fixture_file_upload('/images/test.jpg', 'image/jpeg'))
+        end.not_to change(Picture, :count)
+      end
+
+      describe "once he accept the invitation" do
+        before { post accept_collaboration_path(path) }
+        it "should be able to add pictures to that album" do
+          expect do
+            album.pictures.create(name: "Test picture",
+                          user_id: another_user.id,
+                          image: fixture_file_upload('/images/test.jpg', 'image/jpeg'))
+          end.to change(Picture, :count).by(1)
         end
       end
     end

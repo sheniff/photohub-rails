@@ -1,0 +1,15 @@
+- provide(:title, "Collaborations and invitations")
+.row
+  %aside.span4
+    %section
+      %h1
+        = gravatar_for @user
+        = @user.name
+    %section
+      = render 'shared/stats'
+  .span8
+    = render 'albums/collaborations', object: @albums
+    %h2
+      Invitations
+      %small= "(#{@invitations.count})"
+    = render 'albums/invitations', object: @invitations

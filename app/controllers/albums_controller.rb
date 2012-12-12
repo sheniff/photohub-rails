@@ -46,7 +46,7 @@ class AlbumsController < ApplicationController
   end
 
   def invitations
-    @invitations = @album.collaborators.where(collaborations: {status: Collaboration::PENDING_STATUS})
+    @invited_users = @album.collaborators.where(collaborations: {status: Collaboration::PENDING_STATUS})
   end
 
   private

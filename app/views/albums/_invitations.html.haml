@@ -1,0 +1,6 @@
+- if invitations.any?
+  %h2
+    Invitations
+    %small= "(#{invitations.count})"
+  %ul.invitations
+    = render partial: 'album/invitation_item', collection: invitations

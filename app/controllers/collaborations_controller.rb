@@ -3,7 +3,9 @@ class CollaborationsController < ApplicationController
   before_filter :correct_user,    only: [:accept, :reject]
 
   def index
-    @albums = current_user.collaborating_albums
+    @user = current_user
+    @albums = current_user.collaborating_albums.where(collaborations: {status: Collaboration::ACCEPTED_STATUS})
+    @invitations = current_user.collaborating_albums.where(collaborations: {status: Collaboration::PENDING_STATUS})
   end
 
   def pending
@@ -11,18 +13,18 @@ class CollaborationsController < ApplicationController
   end
 
   def accept
-    if @collaboration.update_attribute(status, Collaboration::ACCEPTED_STATUS)
+    if @collaboration.update_attribute(:status, Collaboration::ACCEPTED_STATUS)
       flash[:success] = "Joined to album: #{@collaboration.album.title}"
     else
       flash[:error] = "Something went wrong, try later..."
     end
-    redirect_to index
+    redirect_to collaborations_url and return
   end
 
   def reject
     @collaboration.destroy
     flash[:notice] = "You rejected joining the album"
-    redirect_to index
+    redirect_to collaborations_url and return
   end
 
   private

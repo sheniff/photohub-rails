@@ -5,7 +5,6 @@ TEST
 ----
 * Unit test for pictures
 * Collaboration tests
-  - Collaborator has to accept invitation to collaborate
   - Collaborator can add/remove pictures (only their own pictures)
   - Only collaborator can edit it's own pictures (name)
   - Owner can remove EVERY picture
@@ -28,12 +27,6 @@ HTML (base)
 
 API
 ---
-* Collaborations
-  // for signed in users
-  - /collaborations             (accepted invitations, current collaborations)
-  - /collaborations/pending     (still not accepted invitations)
-  - /collaborations/:id/accept
-  - /collaborations/:id/reject  (no matter if the user is still collaborating or not)
 
 
 JS APP

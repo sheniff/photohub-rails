@@ -1,0 +1,6 @@
+- if albums.any?
+  %h2
+    Collaborations
+    %small= "(#{albums.count})"
+  %ul.collaborations
+    = render partial: 'album/collaboration_item', collection: albums

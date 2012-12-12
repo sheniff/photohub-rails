@@ -1,0 +1,6 @@
+- if object.any?
+  %h2
+    Invitations
+    %small= "(#{object.count})"
+  %ul.invitations
+    = render partial: 'user/invitation_item', collection: object
