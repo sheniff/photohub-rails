@@ -77,8 +77,12 @@ describe "AlbumPages" do
       let(:collaboration) { album.collaborations.create(user_id: another_user.id, role: Collaboration::COLLABORATOR_ROLE, status: Collaboration::PENDING_STATUS) }
 
       describe "invitations" do
-        before { visit invitations_album_path(album) }
-        it { should have_content(collaboration.album.title) }
+        before do
+          post invite_to_album_path(album,another_user)
+          visit invitations_album_path(album)
+        end
+        it { should have_content(album.title) }
+        it { should have_content(another_user.name) }
         it { should have_link('Revoke') }
         it { should have_link('Invite friend') }
 
@@ -116,7 +120,6 @@ describe "AlbumPages" do
 
   describe "collaborating in an album" do
     include ActionDispatch::TestProcess
-    before { sign_in user }
     let(:album) { FactoryGirl.create(:album, user: user) }
     let(:another_user) { FactoryGirl.create(:user) }
 

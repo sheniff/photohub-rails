@@ -1,2 +1,3 @@
 %li
-  invited_user.name
+  #{invitation_item.name}
+  = link_to "Revoke", revoke_from_album_path(@album.id, invitation_item)
